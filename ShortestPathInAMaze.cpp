@@ -7,8 +7,10 @@
 //    Walk a step costs you cost 1. Find the minimum cost of path from
 //    start to the end.
 // These are links which are helpful:
-// http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
-// http://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
+// 	http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+// 	http://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
+// Same questions:
+// 	http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=197683
 #include <vector>
 #include <iostream>
 #include <queue>
