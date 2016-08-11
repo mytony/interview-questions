@@ -2,6 +2,8 @@
 #snapchat 题目是设计一个类来存放一个无向图的边和点，我大概用的hashset来存一个点的邻居这样，follow up是问图有多满的情况下用bitmap更加合适。
 要写main函数和简单testcase跑一下。我是一开始有点编译错误但是编译通过之后结果是对的。感觉只要是能跑通应该就没什么问题。
 面试小哥是camera组的。
+
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=197498
 */
 
 #include <algorithm>
