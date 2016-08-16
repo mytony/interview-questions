@@ -4,9 +4,13 @@
 using namespace std;
 
 class XMLNode {
-    string name;
+    string name_;
     string value;
     vector<XMLNode*> children;
+public:
+    XMLNode(string name) {
+        name_ = name;
+    }
 }
 
 class XMLParser {
