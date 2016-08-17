@@ -1,19 +1,19 @@
 /*
 Given a number n, find all amicable pairs which the numbers of every pair
 are smaller than n.
+
 Time complexity: O(n ^ 1.5)
+
 What is amicable pairs? 
 	https://en.wikipedia.org/wiki/Amicable_numbers
 */
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <stack>
 #include <cmath>
 #include <numeric>
 using namespace std;
 
-// Return a list of factors of n but not including itself
+// Return a list of factors of n without itself
 // Time: O(sqrt(n))
 vector<int> factorization(int n) {
 	vector<int> res;
@@ -45,10 +45,11 @@ int sumProperDivisors(int n) {
 	return accumulate(factors.begin(), factors.end(), 0);
 }
 
-// Calculate the sum of every numbers under n, 
-// it forms a pair if the sums of each other match.
+// Return all amicable pairs which are smaller than n
 // Time: O(n^1.5)
 vector<pair<int, int> > amicablePairs(int n) {
+	// Calculate the sum of every numbers under n, 
+	// it forms a pair if the sums of each other match.
 	vector<int> sums(n+1, 0);
 	vector<pair<int, int> > res;
 
