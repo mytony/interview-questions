@@ -65,7 +65,7 @@ vector<pair<int, int> > amicablePairs(int n) {
 		sums[i] = sumProperDivisors(i);
 
 		// out of range
-		if (sum[i] > n) { continue; }
+		if (sums[i] > n) { continue; }
 
 		// amicable pairs need to be two different numbers
 		if (i == sums[i]) { continue; } 
@@ -80,7 +80,43 @@ vector<pair<int, int> > amicablePairs(int n) {
 	return res;
 }
 
+// Return all amicable pairs which are smaller than n
+// Time: O(nlogn) Faster!!!
+vector<pair<int, int> > amicablePairs_faster(int n) {
+	// Graph is from jmnjmnjmn's code
+	// 0 1 2 3 4 5 6 7 8 9 
+	// 1 1 1 1 1 1 1 1 1 1
+	// 2       2   2   2
+	// 3           3     3
+	// 4               
+	vector<int> sums(n+1, 1);
+	vector<pair<int, int> > res;
+
+	// O(nlogn) n*(1/2+1/3+1/4....1/n)
+	for (int i = 2; i <= n/2; i++) {
+		for (int j = 2 * i; j <= n; j += i) {
+			sums[j] += i;
+		}
+	}
+
+	for (int i = 1; i <= n; i++) {
+		// out of range
+		if (sums[i] > n) { continue; }
+		// already met or same as itself
+		if (sums[i] <= i) { continue; }
+
+		if (i == sums[sums[i]]) {
+			// found a new pair
+			res.push_back(make_pair(i, sums[i]));
+			cout << i << "," << sums[i]<< endl;
+		}
+
+	}
+
+	return res;
+}
+
 int main() {
-	amicablePairs(100000);
+	amicablePairs_faster(10000000);
 	return 0;
 }
