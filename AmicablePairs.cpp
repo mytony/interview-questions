@@ -12,6 +12,7 @@ What is amicable pairs?
 #include <cmath>
 #include <numeric>
 using namespace std;
+#include <unordered_map>
 
 // Return a list of factors of n without itself
 // Time: O(sqrt(n))
@@ -50,13 +51,21 @@ int sumProperDivisors(int n) {
 vector<pair<int, int> > amicablePairs(int n) {
 	// Calculate the sum of every numbers under n, 
 	// it forms a pair if the sums of each other match.
+
+	// Using vector will cause Segmentation Fault when n is large list 100k
+	// Reason: when sumProperDivisors(i) > my vector size and do below statement
+	// if (sums[sums[i]] == i), it's out of bound
 	vector<int> sums(n+1, 0);
+	// unordered_map<int, int> sums;
 	vector<pair<int, int> > res;
 
 	// O(n)
 	for (int i = 1; i <= n; i++) {
 		// O(n^0.5)
 		sums[i] = sumProperDivisors(i);
+
+		// out of range
+		if (sum[i] > n) { continue; }
 
 		// amicable pairs need to be two different numbers
 		if (i == sums[i]) { continue; } 
@@ -72,6 +81,6 @@ vector<pair<int, int> > amicablePairs(int n) {
 }
 
 int main() {
-	amicablePairs(6000);
+	amicablePairs(100000);
 	return 0;
 }
