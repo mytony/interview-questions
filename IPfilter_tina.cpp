@@ -32,9 +32,11 @@ public:
 			}
 			else if (rule[i] == '.') {
 				nums.push_back(num);
+				num = 0;
 			}
 			else if (rule[i] == '/') {
 				nums.push_back(num);
+				num = 0;
 				bSlash = true; // prepare to have endBit
 			}
 			else if (isdigit(rule[i]) && bSlash) {
@@ -50,16 +52,19 @@ public:
 		while (totalBits != endBit) {
 
 			int num = nums[totalBits/8];
+			// cout << "num=" << num << endl;
 			int currBit = (num & (1 << unitBits)) == 0 ? 0:1 ;
 			// create trienode path
 			if (!run->children[currBit])
 				run->children[currBit] = new TrieNode();
 			run = run->children[currBit];
+			// cout << currBit << " ";
 			totalBits++;
 			unitBits--;
 			if (unitBits < 0) unitBits = 7;
 		}
 		run->isEnd = true;
+		// cout << endl;
 	}
 
 	bool isFiltered(vector<int> ipUnits) { // eg.7.0.0.0
@@ -70,6 +75,7 @@ public:
 			// check 8 bits of num
 			for (int i = 7; i >= 0; i--) {
 				int bit = (num & (1 << i)) == 0 ? 0:1 ;
+				// cout << bit << " ";
 				if (!run)
 					return false;
 				if (run->isEnd) // is with the rule-> filtered!
@@ -77,6 +83,7 @@ public:
 				else 
 					run = run->children[bit];		
 			}
+			// cout << endl;
 		}
 		return false;
 	}
@@ -87,11 +94,12 @@ private:
 
 int main(int argc, char *argv[])
 {
-	int array[] = {6,0,0,0};
+	int array[] = {3,4,8,0};
 	vector<int> v(begin(array), end(array));
 
 	ipFilter obj;
 	obj.setRule("7.0.0.0/8");
+	obj.setRule("3.4.0.0/21");
 	bool isFilter = obj.isFiltered(v);
 	cout << isFilter << endl;
 }
