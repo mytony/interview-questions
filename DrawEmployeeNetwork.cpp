@@ -65,7 +65,7 @@ void print(Person *root, int level) {
 }
 
 // This type of printing assumes there is only one top manager
-void print2(Person *root, int level, bool last) {
+void print2(Person *root, int level, string prefix) {
 	/*
 		Alice 16
 		|-Bob 8
@@ -74,23 +74,31 @@ void print2(Person *root, int level, bool last) {
 		\_Eve 3
 		  \_Ferris 1
 	*/
+
 	// Print
-	if (level >= 0) { // ignore the dummy root node
-		for (int i = 0; i < level; i++) {
-			if (i == level - 1) { // last round
-				cout << (last ? "\\_" : "|-"); // last child of the parent or not
-			} else {
-				cout << "| ";
-			}
-		}
-		cout << root->name << " " << root->itemsSold << endl;
-	}
+	cout << prefix;
+	cout << root->name << " " << root->itemsSold << endl;
 
 	// Go deeper
 	int size = root->subordinates.size();
+	string newPrefix = prefix;
+	int len = prefix.size();
+	if (len != 0) {
+		if (prefix[len-1] == '-') {
+			newPrefix[len-1] = ' ';
+		} else if (prefix[len-1] == '_') {
+			newPrefix[len-1] = ' ';
+			newPrefix[len-2] = ' ';
+		}
+		
+	}
+
 	for (int i = 0; i < size; i++) {
-		bool flag = (i == size - 1) ? true : false;
-		print2(root->subordinates[i], level+1, flag);
+		if (i == size - 1) {
+			print2(root->subordinates[i], level+1, newPrefix + "\\_");
+		} else {
+			print2(root->subordinates[i], level+1, newPrefix + "|-");
+		}
 	}
 }
 
@@ -129,8 +137,9 @@ void process(vector<vector<string> >& input) {
 	// Go through the entire tree by DFS and update the number of items sold
 	dfs(&root);
 
-	// Print 
-	print2(&root, -1, true);
+	// Draw the graph
+	// print(&root, 0);
+	print2(root.subordinates[0], 0, ""); // assume only one top manager
 }
 
 int main() {
