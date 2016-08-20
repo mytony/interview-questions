@@ -1,10 +1,22 @@
 // Meeting room followup 每個meeting有權重weight, 現在只有一個room找出最大的weight和
 // 演算法課教過，講義是 CSCI570_Lecture_06_WK7_Dynamic_Programming_022515.pdf
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Interval {
+	int start;
+	int end;
+	int weight;
+};
+
 static bool compareByEndTime(Interval &in1, Interval &in2) {
 	return in1.end < in2.end;
 }
+
 int maxMeetingRoomWeights(vector<Interval>& intervals) {
-	if (intervals.empty()) return;
+	if (intervals.empty()) return 0;
 	int n = intervals.size();
 	
 	// sort by end time
@@ -15,8 +27,10 @@ int maxMeetingRoomWeights(vector<Interval>& intervals) {
 	vector<int> p(n, -1);
 	for (int i = n-1; i >= 0; i--) {
 		for (int j = i-1; j >= 0; j--) {
-			if (intervals[j].end < intervals[i].start)
+			if (intervals[j].end <= intervals[i].start) {
 				p[i] = j;
+				break;
+			}
 		}
 	}
 	
@@ -33,13 +47,29 @@ int maxMeetingRoomWeights(vector<Interval>& intervals) {
 
 int main(int argc, char *argv[])
 {
-	Interval in1, in2, in3;
+	Interval in1, in2, in3, in4, in5, in6, in7;
 	in1.start = 1;
-	in1.end = 4;
-	in2.start = 3;
-	in2.end = 6;
-	in3.start = 7;
-	in3.end = 9;
-	vector<Interval> ins({in1, in2, in3});
-	// printMeetingRooms(ins);
+	in1.end = 5;
+	in1.weight = 2;
+	in2.start = 2;
+	in2.end = 7;
+	in2.weight = 5;
+	in3.start = 4;
+	in3.end = 8;
+	in3.weight = 6;
+	in4.start = 1;
+	in4.end = 9;
+	in4.weight = 8;
+	in5.start = 3;
+	in5.end = 10;
+	in5.weight = 7;
+	in6.start = 6;
+	in6.end = 11;
+	in6.weight = 3;
+	in7.start = 8;
+	in7.end = 12;
+	in7.weight = 10;
+	vector<Interval> ins({in1, in2, in3, in4, in5, in6, in7});
+	cout << maxMeetingRoomWeights(ins) << endl;
+	return 0;
 }
