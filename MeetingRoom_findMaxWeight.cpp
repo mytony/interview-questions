@@ -1,13 +1,17 @@
 // Meeting room followup 每個meeting有權重weight, 現在只有一個room找出最大的weight和
+// 演算法課教過，講義是 CSCI570_Lecture_06_WK7_Dynamic_Programming_022515.pdf
 static bool compareByEndTime(Interval &in1, Interval &in2) {
 	return in1.end < in2.end;
 }
 int maxMeetingRoomWeights(vector<Interval>& intervals) {
 	if (intervals.empty()) return;
 	int n = intervals.size();
+	
 	// sort by end time
 	sort(intervals.begin(), intervals.end(), compareByEndTime);
-	// construct p[i] is the first end time that is compatible with interval i
+	
+	// construct p[j] is the largest index i < j such that interval i & j are disjoint
+	// -1 represents as none is compatible
 	vector<int> p(n, -1);
 	for (int i = n-1; i >= 0; i--) {
 		for (int j = i-1; j >= 0; j--) {
@@ -15,7 +19,8 @@ int maxMeetingRoomWeights(vector<Interval>& intervals) {
 				p[i] = j;
 		}
 	}
-	// opt[i] is the max weight sum of 1~i
+	
+	// opt[i] is the max weight sum of intervals 1~i
 	vector<int> opt(n, 0);
 	opt[0] = intervals[0].weight;
 	for (int i = 1; i < n; i++) {
