@@ -33,7 +33,7 @@ int maxMeetingRoomWeights(vector<Interval>& intervals) {
 
 int main(int argc, char *argv[])
 {
-  Interval in1, in2, in3;
+	Interval in1, in2, in3;
 	in1.start = 1;
 	in1.end = 4;
 	in2.start = 3;
