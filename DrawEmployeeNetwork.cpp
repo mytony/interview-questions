@@ -65,7 +65,7 @@ void print(Person *root, int level) {
 }
 
 // This type of printing assumes there is only one top manager
-void print2(Person *root, int level, string prefix) {
+void print2(Person *root, string prefix) {
 	/*
 		Alice 16
 		|-Bob 8
@@ -95,9 +95,9 @@ void print2(Person *root, int level, string prefix) {
 
 	for (int i = 0; i < size; i++) {
 		if (i == size - 1) {
-			print2(root->subordinates[i], level+1, newPrefix + "\\_");
+			print2(root->subordinates[i], newPrefix + "\\_");
 		} else {
-			print2(root->subordinates[i], level+1, newPrefix + "|-");
+			print2(root->subordinates[i], newPrefix + "|-");
 		}
 	}
 }
@@ -139,7 +139,7 @@ void process(vector<vector<string> >& input) {
 
 	// Draw the graph
 	// print(&root, 0);
-	print2(root.subordinates[0], 0, ""); // assume only one top manager
+	print2(root.subordinates[0], ""); // assume only one top manager
 }
 
 int main() {
