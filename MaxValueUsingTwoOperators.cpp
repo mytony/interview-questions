@@ -32,14 +32,15 @@ int maxValue(vector<int> nums) {
 	}
 
 	// build other cases
-	for (int d = 1; d < n; d++) { // d = j - i
+	// O(i,j) = MAX( O(i,k) {+|*} O(k+1,j) ) for k in [i,j)
+	for (int d = 1; d < n; d++) { // d = j - i, 從差1做到差n-1
 		for (int i = 0; d + i < n; i++) { // i
-			int maxVal = INT_MIN;
-			for (int k = i; k < d + i; k++) { // O(i,k) op O(k+1,j)
-				maxVal = max(maxVal, dp[i][k]*dp[k+1][i+d]);
-				maxVal = max(maxVal, dp[i][k]+dp[k+1][i+d]);
+			int maxVal = INT_MIN, j = i + d;
+			for (int k = i; k < j; k++) { // O(i,k) op O(k+1,j)
+				maxVal = max(maxVal, dp[i][k]*dp[k+1][j]);
+				maxVal = max(maxVal, dp[i][k]+dp[k+1][j]);
 			}
-			dp[i][i+d] = maxVal;
+			dp[i][j] = maxVal;
 		}
 	}
 
