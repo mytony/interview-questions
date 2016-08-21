@@ -3,6 +3,7 @@
 是朋友的分成一个组，问能分几组。比如1和2是朋友，3和他们都不是朋友，那么就是2组，return 2就可以。自己写test自己测
 
 有點找 all spanning trees 的感覺
+Same as Leetcode 200. Number of Islands
 */
 
 #include <iostream>
