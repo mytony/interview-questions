@@ -1,5 +1,6 @@
 // Meeting room followup 每個meeting有權重weight, 現在只有一個room找出最大的weight和
 // 演算法課教過，講義是 CSCI570_Lecture_06_WK7_Dynamic_Programming_022515.pdf
+// 其他網頁：http://www.geeksforgeeks.org/weighted-job-scheduling/
 
 #include <iostream>
 #include <vector>
