@@ -1,6 +1,9 @@
 // Meeting room followup 每個meeting有權重weight, 現在只有一個room找出最大的weight和
 // 演算法課教過，講義是 CSCI570_Lecture_06_WK7_Dynamic_Programming_022515.pdf
-// 其他網頁：http://www.geeksforgeeks.org/weighted-job-scheduling/
+// 其他網頁：
+// 做法跟我們的一模一樣   http://www.geeksforgeeks.org/weighted-job-scheduling/
+// 裡面也提到如果用linear search去找p[i]這樣總共會是O(n^2)，
+// 但如果改成binary search可以進步到O(nlogn)
 
 #include <iostream>
 #include <vector>
