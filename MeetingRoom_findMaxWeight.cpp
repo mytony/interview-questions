@@ -46,7 +46,47 @@ int maxMeetingRoomWeights(vector<Interval>& intervals) {
 		int weight = (p[i] != -1) ? intervals[i].weight+opt[p[i]] : intervals[i].weight;
 		opt[i] = max(opt[i-1], weight);
 	}
+	for (int i = 0; i < n; i++) {
+		cout << opt[i] << ' ';
+	}
+	cout << endl;
 	return opt[n-1];
+}
+
+////////////////////
+// 測試別人的寫法正不正確，他是照開始時間排序，O(i) is 1~i
+// http://www.1point3acres.com/bbs/forum.php?mod=redirect&goto=findpost&ptid=172729&pid=2250708
+static bool compareByStartTime(Interval &in1, Interval &in2) {
+	return in1.start < in2.start;
+}
+
+// 我懷疑這不算是DP，因為他是用一個變數去紀錄曾出現的最大值
+// 而且是往回配所有可能的dp，當下dp[i]也只考慮i加進去的情況
+int test(vector<Interval>& intervals) {
+	if (intervals.empty()) return 0;
+	int n = intervals.size();
+	
+	// sort by start time
+	sort(intervals.begin(), intervals.end(), compareByStartTime);
+
+	vector<int> dp(n, 0);
+	dp[0] = intervals[0].weight;
+	int max = dp[0];
+	for (int i = 1; i < n; i++) {
+		dp[i] = intervals[i].weight; // 這行大概是要當前面j沒人匹配時，這樣算只拿j自己
+		for (int j = 0; j < i; j++) {
+			if (intervals[j].end <= intervals[i].start) {
+				dp[i] = std::max(dp[i], dp[j] + intervals[i].weight);
+			}
+		}
+		max = std::max(dp[i], max);
+	}
+
+	for (int i = 0; i < n; i++) {
+		cout << dp[i] << ' ';
+	}
+	cout << endl;
+	return max;
 }
 
 int main(int argc, char *argv[])
@@ -72,8 +112,10 @@ int main(int argc, char *argv[])
 	in6.weight = 3;
 	in7.start = 8;
 	in7.end = 12;
-	in7.weight = 10;
+	in7.weight = 1;
 	vector<Interval> ins({in1, in2, in3, in4, in5, in6, in7});
+
 	cout << maxMeetingRoomWeights(ins) << endl;
+	cout << test(ins) << endl;
 	return 0;
 }
